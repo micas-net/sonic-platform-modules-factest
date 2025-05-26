@@ -1,0 +1,18 @@
+{
+    "chassis": {
+        "B9510-40QC": {
+            "component": {
+                "BASE_CPLD": { },
+                "FCB_CPLD": { },
+                "CPU_CPLD": { },
+                "MISC_CPLD": { },
+                "MAC_CPLDA": { },
+                "MAC FPGA": { },
+                "BIOS": { },
+                "BMC": { },
+                "ALTBMC": { }
+            }
+        }
+    }
+}
+

@@ -1,0 +1,605 @@
+// SPDX-License-Identifier: GPL-2.0
+/*
+ * dts file for Phytium ft2004c SoC
+ *
+ * Copyright (C) 2020, Phytium Technology Co., Ltd.
+ */
+
+#include <dt-bindings/interrupt-controller/arm-gic.h>
+
+
+/ {
+	compatible = "phytium,ft2004c";
+	interrupt-parent = <&gic>;
+	#address-cells = <2>;
+	#size-cells = <2>;
+
+	aliases {
+		ethernet0 = &gmac0;
+		ethernet1 = &gmac1;
+	};
+
+	psci {
+		compatible   = "arm,psci-1.0";
+		method       = "smc";
+		cpu_suspend  = <0xc4000001>;
+		cpu_off      = <0x84000002>;
+		cpu_on       = <0xc4000003>;
+		sys_poweroff = <0x84000008>;
+		sys_reset    = <0x84000009>;
+	};
+
+	cpus {
+		#address-cells = <0x2>;
+		#size-cells = <0x0>;
+
+		cpu0: cpu@0 {
+			device_type = "cpu";
+			compatible = "arm,armv8";
+			reg = <0x0 0x0>;
+			enable-method = "psci";
+			numa-node-id = <0>;
+			clocks = <&scpi_dvfs 0>;
+		};
+
+		cpu1: cpu@1 {
+			device_type = "cpu";
+			compatible = "arm,armv8";
+			reg = <0x0 0x1>;
+			enable-method = "psci";
+			numa-node-id = <0>;
+			clocks = <&scpi_dvfs 0>;
+		};
+
+		cpu2: cpu@100 {
+			device_type = "cpu";
+			compatible = "arm,armv8";
+			reg = <0x0 0x100>;
+			enable-method = "psci";
+			numa-node-id = <0>;
+			clocks = <&scpi_dvfs 1>;
+		};
+
+		cpu3: cpu@101 {
+			device_type = "cpu";
+			compatible = "arm,armv8";
+			reg = <0x0 0x101>;
+			enable-method = "psci";
+			numa-node-id = <0>;
+			clocks = <&scpi_dvfs 1>;
+		};
+	};
+
+	gic: interrupt-controller@29900000 {
+		compatible = "arm,gic-v3";
+		#interrupt-cells = <3>;
+		#address-cells = <2>;
+		#size-cells = <2>;
+		ranges;
+		interrupt-controller;
+		reg = <0x0 0x29a00000 0 0x20000>,       /* GICD */
+		      <0x0 0x29b00000 0 0x100000>,      /* GICR */
+		      <0x0 0x29c00000 0 0x10000>,       /* GICC */
+		      <0x0 0x29c10000 0 0x10000>,       /* GICH */
+		      <0x0 0x29c20000 0 0x10000>;       /* GICV */
+		interrupts = <GIC_PPI 9 IRQ_TYPE_LEVEL_HIGH>;
+
+		its: gic-its@29920000 {
+			compatible = "arm,gic-v3-its";
+			msi-controller;
+			reg = <0x0 0x29a20000 0x0 0x20000>;
+		};
+	};
+
+	timer {
+		compatible = "arm,armv8-timer";
+		interrupts = <GIC_PPI 13 IRQ_TYPE_LEVEL_LOW>,
+			     <GIC_PPI 14 IRQ_TYPE_LEVEL_LOW>,
+			     <GIC_PPI 11 IRQ_TYPE_LEVEL_LOW>,
+			     <GIC_PPI 10 IRQ_TYPE_LEVEL_LOW>;
+		clock-frequency = <50000000>;
+	};
+
+	pmu {
+		compatible = "arm,armv8-pmuv3";
+		interrupts = <GIC_PPI 7 IRQ_TYPE_LEVEL_LOW>;
+	};
+
+	clocks {
+		#address-cells = <2>;
+		#size-cells = <2>;
+		ranges;
+
+		clk250mhz: clk250mhz {
+			compatible = "fixed-clock";
+			#clock-cells = <0>;
+			clock-frequency = <250000000>;
+		};
+
+		sysclk_48mhz: clk48mhz {
+			compatible = "fixed-clock";
+			#clock-cells = <0>;
+			clock-frequency = <48000000>;
+		};
+		sysclk_50mhz: clk50mhz {
+			compatible = "fixed-clock";
+			#clock-cells = <0>;
+			clock-frequency = <50000000>;
+		};
+
+		sysclk_600mhz: clk600mhz {
+			compatible = "fixed-clock";
+			#clock-cells = <0>;
+			clock-frequency = <600000000>;
+		};
+	};
+
+	soc {
+        compatible = "simple-bus";    /* 带该字符串，其子节点均会创建出pdev */
+		#address-cells = <2>;
+		#size-cells = <2>;
+		dma-coherent;
+		ranges;
+
+		lpc@20000000 {
+			#address-cells = <0x1>;
+			#size-cells = <0x0>;
+			compatible = "phytium,lpc", "simple-bus";
+            /* 表征LPC用来 0x27FFFF00-0x28000000、0x20000000-0x20000100的空间 */
+			reg = <0x0 0x27FFFF00 0x0 0x100 0x0 0x20000000 0x0 0x100>;
+            /* 共享外设中断、中断号5、高电平触发 */
+			interrupts = <GIC_SPI 5 IRQ_TYPE_LEVEL_HIGH>;
+			status = "ok";
+			phytium,lpc-gpio;
+		};
+
+		gpio0: gpio@28004000 {
+            compatible = "phytium,gpio";
+			reg = <0x0 0x28004000 0x0 0x1000>;
+            gpio-controller;
+            #gpio-cells = <2>;
+			#address-cells = <1>;
+			#size-cells = <0>;
+            interrupts = <GIC_SPI 10 IRQ_TYPE_LEVEL_HIGH>;
+				interrupt-controller;
+				#interrupt-cells = <2>;
+            base = <0x0>;
+            porta: gpio-port@0 {
+                compatible = "phytium,gpio-port";
+				reg = <0>;
+                nr-gpios = <8>;
+			};
+            portb: gpio-port@1 {
+                compatible = "phytium,gpio-port";
+				reg = <1>;
+                nr-gpios = <8>;
+			};
+		};
+
+		gpio1: gpio@28005000 {
+            compatible = "phytium,gpio";
+			reg = <0x0 0x28005000 0x0 0x1000>;
+            gpio-controller;
+            #gpio-cells = <2>;
+			#address-cells = <1>;
+			#size-cells = <0>;
+            interrupts = <GIC_SPI 11 IRQ_TYPE_LEVEL_HIGH>;
+            interrupt-controller;
+            #interrupt-cells = <2>;
+
+            base = <0x10>;
+
+            portc: gpio-port@0 {
+                compatible = "phytium,gpio-port";
+				reg = <0>;
+                nr-gpios = <8>;
+            };
+
+            portd: gpio-port@1 {
+                compatible = "phytium,gpio-port";
+				reg = <1>;
+                nr-gpios = <8>;
+			};
+		};
+
+		uart0: uart@28000000 {
+			compatible = "arm,pl011", "arm,primecell";
+			reg = <0x0 0x28000000 0x0 0x1000>;
+			baud = <115200>;
+			reg-shift = <2>;
+			reg-io-width = <4>;
+			interrupts = <GIC_SPI 6 IRQ_TYPE_LEVEL_HIGH>;
+			clocks = <&sysclk_50mhz &sysclk_50mhz>;
+			clock-names = "uartclk", "apb_pclk";
+		};
+
+		uart1: uart@28001000 {
+			compatible = "arm,pl011", "arm,primecell";
+			reg = <0x0 0x28001000 0x0 0x1000>;
+			baud = <115200>;
+			reg-shift = <2>;
+			reg-io-width = <4>;
+			interrupts = <GIC_SPI 7 IRQ_TYPE_LEVEL_HIGH>;
+			clocks = <&sysclk_50mhz &sysclk_50mhz>;
+			clock-names = "uartclk", "apb_pclk";
+		};
+
+		uart2: uart@28002000 {
+			compatible = "arm,pl011", "arm,primecell";
+			reg = <0x0 0x28002000 0x0 0x1000>;
+			baud = <115200>;
+			reg-shift = <2>;
+			reg-io-width = <4>;
+			interrupts = <GIC_SPI 8 IRQ_TYPE_LEVEL_HIGH>;
+			clocks = <&sysclk_50mhz &sysclk_50mhz>;
+			clock-names = "uartclk", "apb_pclk";
+		};
+
+		uart3: uart@28003000 {
+			compatible = "arm,pl011", "arm,primecell";
+			reg = <0x0 0x28003000 0x0 0x1000>;
+			baud = <115200>;
+			reg-shift = <2>;
+			reg-io-width = <4>;
+			interrupts = <GIC_SPI 9 IRQ_TYPE_LEVEL_HIGH>;
+			clocks = <&sysclk_50mhz &sysclk_50mhz>;
+			clock-names = "uartclk", "apb_pclk";
+		};
+
+		/* Unused and generate warning */
+		sdci: sdci@28207c00 {
+			compatible = "phytium,sdci";
+			reg = <0x0 0x28207c00 0x0 0x100>;
+			interrupts = <GIC_SPI 20 IRQ_TYPE_LEVEL_HIGH>,
+				     <GIC_SPI 21 IRQ_TYPE_LEVEL_HIGH>,
+				     <GIC_SPI 22 IRQ_TYPE_LEVEL_HIGH>;
+			clocks = <&sysclk_600mhz &sysclk_600mhz>;
+			clock-names = "phytium_sdc_clk";
+			no-sdio;
+			no-mmc;
+			no-dma-coherent;
+		};
+
+		watchdog0: watchdog@2800a000 {
+			compatible = "arm,sbsa-gwdt";
+			reg = <0x0 0x2800b000 0x0 0x1000>,
+			      <0x0 0x2800a000 0x0 0x1000>;
+			interrupts = <GIC_SPI 16 IRQ_TYPE_LEVEL_HIGH>;
+			timeout-sec = <30>;
+		};
+
+		watchdog1: watchdog@28016000 {
+			compatible = "arm,sbsa-gwdt";
+			reg = <0x0 0x28017000 0x0 0x1000>,
+			      <0x0 0x28016000 0x0 0x1000>;
+			interrupts = <GIC_SPI 17 IRQ_TYPE_LEVEL_HIGH>;
+			timeout-sec = <30>;
+		};
+
+		rtc0: rtc@2800d000 {
+			compatible = "phytium,rtc";
+			reg = <0x0 0x2800d000 0x0 0x1000>;
+			clocks = <&sysclk_50mhz>;
+			clock-names = "rtc_pclk";
+			interrupts = <GIC_SPI 4 IRQ_TYPE_LEVEL_HIGH>;
+			status = "disabled";
+		};
+
+		i2c0: i2c@28006000 {
+			compatible = "snps,wb-designware-i2c";
+			reg = <0x0 0x28006000 0x0 0x1000>;
+			interrupts = <GIC_SPI 12 IRQ_TYPE_LEVEL_HIGH>;
+			clocks = <&sysclk_50mhz>;
+			ctrl_idx = <0x0>;
+			status = "disabled";
+		};
+
+		i2c1: i2c@28007000 {
+			compatible = "snps,wb-designware-i2c";
+			reg = <0x0 0x28007000 0x0 0x1000>;
+			interrupts = <GIC_SPI 13 IRQ_TYPE_LEVEL_HIGH>;
+			clocks = <&sysclk_50mhz>;
+			/* 9clk reset */
+			reset-src        = <1>;         /* 9clk复位方式，0：io地址访问, 1：mem地址访问, 2：i2c访问, 3：gpio访问 */
+			reg-base    = <0x200000e4>;     /* i2c unlock寄存器地址 */
+			mask        = <0x01>;           /* reset mask */
+			reset-on    = <0x01>;           /* 执行9clk */
+			reset-off   = <0x00>;           /* 不执行9clk */
+			mask-done   = <0x4>;		/* done mask*/
+			done-on	    = <0x4>;		/* 写入done */
+			delay-reset-before = <20>;      /* 执行复位前延时 */
+			delay-reseting = <1>;           /* 执行复位时间 */
+			delay-reset-after = <1>;   	/* 执行复位后延时，必须保证时间大于9clk时间 */
+			reg-i2c-status = <0x200000e0>;  /* cpld i2c状态寄存器 */
+			i2c-busy = <0x10>;		/* 表示正在执行9clk */
+			ctrl_idx = <1>;
+			status = "disabled";
+		};
+
+		i2c2: i2c@28008000 {
+			compatible = "snps,wb-designware-i2c";
+			reg = <0x0 0x28008000 0x0 0x1000>;
+			interrupts = <GIC_SPI 14 IRQ_TYPE_LEVEL_HIGH>;
+			clocks = <&sysclk_50mhz>;
+			/* 9clk reset */
+			reset-src        = <1>;         /* 9clk复位方式，0：io地址访问, 1：mem地址访问, 2：i2c访问, 3：gpio访问 */
+			reg-base    = <0x200000e4>;     /* i2c unlock寄存器地址 */
+			mask        = <0x02>;           /* reset mask */
+			reset-on    = <0x02>;           /* 执行9clk */
+			reset-off   = <0x00>;           /* 不执行9clk */
+			mask-done   = <0x8>;		/* done mask*/
+			done-on	    = <0x8>;		/* 写入done */
+			delay-reset-before = <20>;      /* 执行复位前延时 */
+			delay-reseting = <1>;           /* 执行复位时间 */
+			delay-reset-after = <1>;    	/* 执行复位后延时，必须保证时间大于9clk时间 */
+			reg-i2c-status = <0x200000e0>;  /* cpld i2c状态寄存器 */
+			i2c-busy = <0x20>;		/* 表示正在执行9clk */
+			ctrl_idx = <2>;
+			status = "disabled";
+		};
+
+		i2c3: i2c@28009000 {
+			compatible = "snps,wb-designware-i2c";
+			reg = <0x0 0x28009000 0x0 0x1000>;
+			interrupts = <GIC_SPI 15 IRQ_TYPE_LEVEL_HIGH>;
+			clocks = <&sysclk_50mhz>;
+			ctrl_idx = <0x3>;
+			status = "disabled";
+		};
+
+		spi0: spi@2800c000 {
+			compatible = "phytium,spi";
+			interrupts = <GIC_SPI 18 IRQ_TYPE_LEVEL_HIGH>;
+			reg = <0x0 0x2800c000 0x0 0x1000>;
+			clocks = <&sysclk_50mhz>;
+			num-cs = <1>;
+			cs-gpios = <&portc 5 0>;
+			status = "disabled";
+		};
+
+		spi1: spi@28013000 {
+			compatible = "phytium,spi";
+			interrupts = <GIC_SPI 19 IRQ_TYPE_LEVEL_HIGH>;
+			reg = <0x0 0x28013000 0x0 0x1000>;
+			clocks = <&sysclk_50mhz>;
+			num-cs = <4>;
+			status = "disabled";
+		};
+
+		qspi: spi@28014000 {
+			compatible = "phytium,wb-qspi-nor";
+			reg = <0x0 0x28014000 0x0     0x1000>,
+			      <0x0        0x0 0x0 0x02000000>;
+			reg-names = "qspi", "qspi_mm";
+			clocks = <&sysclk_600mhz>;
+			#address-cells = <1>;
+			#size-cells = <0>;
+
+
+			flash@0 {
+				compatible = "jedec,spi-nor";
+				reg = <0x00>;
+				spi-rx-bus-width = <1>;
+				spi-max-frequency = <5000000>;
+
+				partitions {
+					compatible = "fixed-partitions";
+					#address-cells = <1>;
+					#size-cells = <1>;
+
+					partition {
+						label = "rom";
+						reg = <0 0x1000000>;
+					};
+
+					partition@0 {
+						label = "master_bootloader";
+						reg = <0 0x500000>;
+					};
+
+					partition@500000 {
+						/* uboot-env - 64k */
+						label = "uboot-env";
+						reg = <0x500000 0x10000>;
+						env_size = <0x10000>;
+					};
+
+					partition@510000 {
+						label = "ONIE";
+						reg = <0x510000 0xaf0000>;
+					};
+				};
+			};
+			flash@1 {
+				compatible = "jedec,spi-nor";
+				reg = <0x01>;
+				spi-rx-bus-width = <1>;
+				spi-max-frequency = <5000000>;
+
+				partitions {
+					compatible = "fixed-partitions";
+					#address-cells = <1>;
+					#size-cells = <1>;
+
+					partition {
+						label = "rom_other";
+						reg = <0 0x1000000>;
+					};
+
+					partition@0 {
+						label = "master_bootloader_other";
+						reg = <0 0x500000>;
+					};
+
+					partition@500000 {
+						/* uboot-env - 64k */
+						label = "uboot-env_other";
+						reg = <0x500000 0x10000>;
+						env_size = <0x10000>;
+					};
+
+					partition@510000 {
+						label = "ONIE_other";
+						reg = <0x510000 0xaf0000>;
+					};
+				};
+			};
+		};
+
+		pcie: pcie@40000000 {
+			compatible = "pci-host-ecam-generic";
+			device_type = "pci";
+			#address-cells = <3>;
+			#size-cells = <2>;
+			#interrupt-cells = <1>;
+			reg = <0x0 0x40000000 0x0 0x10000000>;
+			msi-parent = <&its>;
+			bus-range = <0x0 0xff>;
+			interrupt-map-mask = <0x0 0x0 0x0 0x7>;
+			interrupt-map = <0x0 0x0 0x0 0x1 &gic 0x0 0x0 GIC_SPI 28 IRQ_TYPE_LEVEL_HIGH>,
+					<0x0 0x0 0x0 0x2 &gic 0x0 0x0 GIC_SPI 29 IRQ_TYPE_LEVEL_HIGH>,
+					<0x0 0x0 0x0 0x3 &gic 0x0 0x0 GIC_SPI 30 IRQ_TYPE_LEVEL_HIGH>,
+					<0x0 0x0 0x0 0x4 &gic 0x0 0x0 GIC_SPI 31 IRQ_TYPE_LEVEL_HIGH>;
+			ranges = <0x01000000 0x00 0x00000000 0x0  0x50000000  0x0  0x00f00000>,
+				 <0x02000000 0x00 0x58000000 0x0  0x58000000  0x0  0x28000000>,
+				 <0x03000000 0x10 0x00000000 0x10 0x00000000 0x10  0x00000000>;
+		};
+
+		phytium_axi_setup: stmmac-axi-config {
+			snps,wr_osr_lmt = <0>;
+			snps,rd_osr_lmt = <0>;
+			snps,blen = <0 0 0 0 16 8 4>;
+		};
+
+		gmac0: eth@2820c000 {
+			compatible = "wb,dwmac";
+			reg = <0x0 0x2820c000 0x0 0x2000>;
+			interrupts = <GIC_SPI 49 IRQ_TYPE_LEVEL_HIGH>;
+			interrupt-names = "macirq";
+			clocks = <&clk250mhz>;
+			clock-names = "stmmaceth";
+			status = "disabled";
+
+			snps,pbl = <16>;
+			snps,fixed-burst;
+			snps,axi-config = <&phytium_axi_setup>;
+			snps,force_sf_dma_mode;
+			snps,multicast-filter-bins = <64>;
+			snps,perfect-filter-entries = <128>;
+			tx-fifo-depth = <4096>;
+			rx-fifo-depth = <4096>;
+			max-frame-size = <9000>;
+			tx_clk_delay_addr = <0x28180360>;
+			tx_clk_delay_val  = <0x35000000>;
+		};
+
+		gmac1: eth@28210000 {
+			compatible = "phytium,gmac";
+			reg = <0x0 0x28210000 0x0 0x2000>;
+			interrupts = <GIC_SPI 50 IRQ_TYPE_LEVEL_HIGH>;
+			interrupt-names = "macirq";
+			clocks = <&clk250mhz>;
+			clock-names = "stmmaceth";
+			status = "disabled";
+
+			snps,pbl = <16>;
+			snps,fixed-burst;
+			snps,axi-config = <&phytium_axi_setup>;
+			snps,force_sf_dma_mode;
+			snps,multicast-filter-bins = <64>;
+			snps,perfect-filter-entries = <128>;
+			snps,rx-queues-to-use = <2>;
+			tx-fifo-depth = <4096>;
+			rx-fifo-depth = <4096>;
+			max-frame-size = <9000>;
+			tx_clk_delay_addr = <0x2818037c>;
+			tx_clk_delay_val  = <0x35000000>;
+		};
+
+		can0: can@28207000 {
+			compatible = "phytium,can";
+			reg = <0x0 0x28207000 0x0 0x400>;
+			interrupts = <GIC_SPI 87 IRQ_TYPE_LEVEL_HIGH>;
+			clocks = <&sysclk_600mhz>;
+			clock-names = "phytium_can_clk";
+			tx-fifo-depth = <0x40>;
+			rx-fifo-depth = <0x40>;
+		};
+
+		can1: can@28207400 {
+			compatible = "phytium,can";
+			reg = <0x0 0x28207400 0x0 0x400>;
+			interrupts = <GIC_SPI 91 IRQ_TYPE_LEVEL_HIGH>;
+			clocks = <&sysclk_600mhz>;
+			clock-names = "phytium_can_clk";
+			tx-fifo-depth = <0x40>;
+			rx-fifo-depth = <0x40>;
+		};
+
+		can2: can@028207800 {
+			compatible = "phytium,can";
+			reg = <0x0 0x28207800 0x0 0x400>;
+			interrupts = <GIC_SPI 92 IRQ_TYPE_LEVEL_HIGH>;
+			clocks = <&sysclk_600mhz>;
+			clock-names = "phytium_can_clk";
+			tx-fifo-depth = <0x40>;
+			rx-fifo-depth = <0x40>;
+		};
+
+		hda: hda@28206000 {
+			compatible = "phytium,hda";
+			reg = <0 0x28206000 0x0 0x1000>;
+			interrupts = <GIC_SPI 23 IRQ_TYPE_LEVEL_HIGH>;
+			clocks = <&sysclk_50mhz>;
+			clock-names = "phytium_hda_clk";
+		};
+
+		mbox: mailbox@2a000000 {
+			compatible = "phytium,mbox";
+			reg = <0x0 0x2a000000 0x0 0x1000>;
+			interrupts = <GIC_SPI 48 IRQ_TYPE_LEVEL_HIGH>;
+			#mbox-cells = <1>;
+			clocks = <&sysclk_50mhz>;
+			clock-names = "apb_pclk";
+		};
+
+		sram: sram@2a006000 {
+			compatible = "phytium,ft2004-sram-ns","mmio-sram";
+			reg = <0x0 0x2a006000 0x0 0x2000>;
+
+			#address-cells = <1>;
+			#size-cells = <1>;
+			ranges = <0x0 0x0 0x2a006000 0x2000>;
+
+			scpi_lpri: scpi-shmem@0 {
+				compatible = "phytium,ft2004-scpi-shmem";
+				reg = <0x1000 0x800>;
+			};
+		};
+
+		scpi_protocol: scpi {
+			compatible = "arm,scpi";
+			mboxes = <&mbox 0>;
+			shmem = <&scpi_lpri>;
+
+			clocks {
+				compatible = "arm,scpi-clocks";
+
+				scpi_dvfs: scpi_clocks@0 {
+					compatible = "arm,scpi-dvfs-clocks";
+					#clock-cells = <1>;
+					clock-indices = <0>, <1>, <2>, <3>;
+					clock-output-names = "c0", "c1", "c2", "c3";
+				};
+			};
+
+			scpi_sensors: sensors {
+				compatible = "arm,scpi-sensors";
+				#thermal-sensor-cells = <1>;
+			};
+		};
+
+
+	};
+
+};

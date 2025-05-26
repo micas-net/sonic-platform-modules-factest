@@ -1,0 +1,3 @@
+led load /usr/share/sonic/device/x86_64-ruijie_b6940-64qc-d16-r0/custom_led.bin
+led auto on
+led start

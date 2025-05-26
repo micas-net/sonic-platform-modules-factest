@@ -1,0 +1,2 @@
+/brcm-sai/sdk/fw_extphy/libs/CRT2_26/build/obj/credo/sbs.o: sbs.c \
+ /brcm-sai/sdk/fw_extphy/libs/CRT2_26/credo/include/libs/sbs.h

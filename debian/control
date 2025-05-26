@@ -1,0 +1,69 @@
+Source: sonic-ruijie-platform-modules
+Section: main
+Priority: extra
+Maintainer: Ruijie Network <sukunlin@ruijie.com.cn>
+Standards-Version: 3.9.3
+
+Package: platform-modules-ruijie-m2-w6940-128x1-fr4
+Architecture: amd64
+Description: kernel modules for platform devices such as fan, led, sfp
+
+Package: platform-modules-ruijie-m2-w6940-64oc
+Architecture: amd64
+Description: kernel modules for platform devices such as fan, led, sfp
+
+Package: platform-modules-ruijie-m2-w6931-64qc
+Architecture: amd64
+Description: kernel modules for platform devices such as fan, led, sfp
+
+Package: platform-modules-ruijie-b6990-128qc2xs
+Architecture: amd64
+Description: kernel modules for platform devices such as fan, led, sfp
+
+Package: platform-modules-ruijie-b6501-48vs8cq
+Architecture: arm64
+Description: kernel modules for platform devices such as fan, led, sfp
+
+Package: platform-modules-ruijie-b6501-32cq
+Architecture: arm64
+Description: kernel modules for platform devices such as fan, led, sfp
+
+Package: platform-modules-ruijie-b6501-48vs8cq-v2
+Architecture: arm64
+Description: kernel modules for platform devices such as fan, led, sfp
+
+Package: platform-modules-ruijie-b6231-48xs8cq-v2
+Architecture: arm64
+Description: kernel modules for platform devices such as fan, led, sfp
+
+Package: platform-modules-ruijie-b6940-64qc
+Architecture: amd64
+Description: kernel modules for platform devices such as fan, led, sfp
+
+Package: platform-modules-ruijie-b6940-64qc-d16
+Architecture: amd64
+Description: kernel modules for platform devices such as fan, led, sfp
+
+Package: platform-modules-ruijie-b9510-40qc
+Architecture: amd64
+Description: kernel modules for platform devices such as fan, led, sfp
+
+Package: platform-modules-ruijie-b6510-48vs8cq
+Architecture: amd64
+Description: kernel modules for platform devices such as fan, led, sfp
+
+Package: platform-modules-ruijie-ws9851-32dq
+Architecture: amd64
+Description: kernel modules for platform devices such as fan, led, sfp
+
+Package: platform-modules-ruijie-testubb-phy
+Architecture: amd64
+Description: kernel modules for platform devices such as fan, led, sfp
+
+Package: platform-modules-ruijie-tc20r0t400
+Architecture: amd64
+Description: kernel modules for platform devices such as fan, led, sfp
+
+Package: platform-modules-ruijie-tc20z0t400
+Architecture: amd64
+Description: kernel modules for platform devices such as fan, led, sfp

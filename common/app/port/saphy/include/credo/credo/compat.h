@@ -1,0 +1,414 @@
+#ifndef CREDO_COMPAT_H
+#define CREDO_COMPAT_H
+
+#include "credo/types.h"
+// if you do not want the compatiblity header, set CR_NO_COMPAT_LAYER
+#ifndef CR_NO_COMPAT_LAYER
+
+#define display_slice_info                  cr_slice_display_info
+#define display_port_info                   cr_port_display_info
+#define display_lane_info                   cr_lane_display_info
+#define display_firmware_info               cr_firmware_display_info
+#define create_sdk                          cr_sdk_create
+#define destroy_sdk                         cr_sdk_destroy
+#define get_sdk_rev                         cr_sdk_version
+#define get_sdk_rev_str                     cr_sdk_version_str
+#define load_chip_library                   cr_lib_load_chip
+#define set_sdk_burst_read                  cr_sdk_set_burst_read
+#define set_sdk_burst_write                 cr_sdk_set_burst_write
+#define set_sdk_broadcast_write             cr_sdk_set_broadcast_write
+#define set_sdk_broadcast_burst_write       cr_sdk_set_broadcast_burst_write
+#define set_max_log_level                   cr_sdk_set_loglevel
+#define get_max_log_level                   cr_sdk_get_loglevel
+#define set_sdk_shell_logger                cr_shell_set_logger
+#define tcm_read                            cr_tcm_read
+#define tcm_write                           cr_tcm_write
+#define tcm_burst_read                      cr_tcm_burst_read
+#define tcm_burst_write                     cr_tcm_burst_write
+#define pcs_read                            cr_pcs_read
+#define pcs_write                           cr_pcs_write
+#define pcs_status_read                     cr_pcs_status_read
+#define rs_fec_read                         cr_rsfec_read
+#define rs_fec_write                        cr_rsfec_write
+#define mac_read                            cr_mac_read
+#define mac_write                           cr_mac_write
+#define mac_status_read                     cr_mac_status_read
+#define mac_stats_read                      cr_mac_stats_read
+#define mac_stats_write                     cr_mac_stats_write
+#define mac_stats_read_counters             cr_mac_stats_read_counters
+#define mac_stats_clear_counters            cr_mac_stats_clear_counters
+#define mac_stop                            cr_mac_stop
+#define eip_stop                            cr_eip_stop
+#define configure_eip                       cr_eip_configure
+#define configure_mac                       cr_mac_configure
+#define display_topology_types              cr_eip_display_topologies
+#define set_topology                        cr_eip_set_topology
+#define get_topology                        cr_eip_get_topology
+#define fault_propagation_control           cr_mac_set_faultprop
+#define fault_propagation_status            cr_mac_get_faultprop
+#define enable_low_latency_bypass           cr_eip_set_low_latency_bypass
+#define low_latency_bypass_status           cr_eip_get_low_latency_bypass
+#define get_client_id                       cr_eip_get_client_id
+#define get_channel_id                      cr_eip_get_channel_id
+#define get_macsec_datapath                 cr_eip_get_macsec_datapath
+#define packet_inject                       cr_eip_inject_packet
+#define firmware_unload                     cr_firmware_unload
+#define firmware_load                       cr_firmware_load
+#define firmware_load_broadcast             cr_firmware_load_broadcast
+#define firmware_wait_magic_word            cr_firmware_wait_magic_word
+#define firmware_wait_top_pll_cal           cr_firmware_wait_top_pll_cal
+#define firmware_get_status                 cr_firmware_get_status
+#define firmware_magic                      cr_firmware_magic
+#define firmware_ver                        cr_firmware_version
+#define firmware_hash                       cr_firmware_hash
+#define firmware_crc                        cr_firmware_crc
+#define firmware_date                       cr_firmware_date
+#define firmware_cmd                        cr_firmware_cmd
+#define firmware_cmd_ex                     cr_firmware_cmd_ex
+#define firmware_debug_cmd                  cr_firmware_debug_cmd
+#define firmware_debug_cmd_ex               cr_firmware_debug_cmd_ex
+#define firmware_reg_rd                     cr_firmware_reg_rd
+#define firmware_reg_wr                     cr_firmware_reg_wr
+#define firmware_reg_rd_ex                  cr_firmware_reg_rd_ex
+#define firmware_reg_wr_ex                  cr_firmware_reg_wr_ex
+#define firmware_configure_port             cr_port_configure
+#define firmware_teardown_port              cr_port_destroy
+#define firmware_query_port                 cr_port_query
+#define firmware_clear_all_port             cr_port_destroy_all
+#define firmware_config_lane                cr_lane_configure_mode
+#define firmware_config_lane_loopback       cr_lane_configure_mode_loopback
+#define firmware_deconfig_lane              cr_lane_destroy_mode
+#define firmware_get_slice_temp             cr_slice_get_temperature
+#define firmware_phy_ready                  cr_serdes_get_all_phy_ready
+#define firmware_phy_lane_ready             cr_serdes_get_phy_ready
+#define firmware_get_adapt_count            cr_serdes_get_adapt_count
+#define firmware_get_readapt_count          cr_serdes_get_readapt_count
+#define firmware_get_link_lost_count        cr_serdes_get_link_lost_count
+#define firmware_get_los_count              cr_serdes_get_los_count
+#define firmware_get_channel_estimate       cr_serdes_get_channel_estimate
+#define firmware_get_of                     cr_serdes_get_of
+#define firmware_get_hf                     cr_serdes_get_hf
+#define firmware_get_eye                    cr_serdes_get_eye
+#define firmware_get_isi                    cr_serdes_get_isi
+#define firmware_get_rx_ffe                 cr_serdes_get_rx_ffe
+#define firmware_get_rx_ffe_nbias           cr_serdes_get_rx_ffe_nbias
+#define firmware_get_rx_ffe_kaccu           cr_serdes_get_rx_ffe_kaccu
+#define firmware_get_rx_ffe_weighting_table cr_serdes_get_rx_ffe_weighting_table
+#define firmware_get_rx_ffe_flip_counter    cr_serdes_get_rx_ffe_flip_counter
+#define firmware_get_lane_speed             cr_lane_get_speed
+#define firmware_eye_monitor_start          cr_eye_monitor_start
+#define firmware_eye_monitor_stop           cr_eye_monitor_stop
+#define firmware_eye_monitor_progress       cr_eye_monitor_get_progress
+#define firmware_eye_monitor_data           cr_eye_monitor_get_data
+#define firmware_eye_monitor_range          cr_eye_monitor_get_range
+#define firmware_eye_monitor_separator      cr_eye_monitor_get_separator
+#define firmware_load_spi                   cr_spiflash_load_firmware
+#define firmware_spiflash_display_mbr       cr_spiflash_display_mbr
+#define firmware_spiflash_format_mbr        cr_spiflash_format_mbr
+#define firmware_spiflash_read_firmware     cr_spiflash_read_firmware
+#define firmware_spiflash_write_firmware    cr_spiflash_write_firmware
+#define get_slice_option_list               cr_slice_get_option_list
+#define is_slice_option_supported           cr_slice_is_option_supported
+#define get_slice_option                    cr_slice_get_option
+#define set_slice_option                    cr_slice_set_option
+#define allocate_device                     cr_device_create
+#define destroy_device                      cr_device_destroy
+#define detect_device_type                  cr_device_detect_type
+#define get_device_type                     cr_device_get_type
+#define get_device_type_name                cr_device_get_type_name
+#define get_slice_count                     cr_device_get_slice_count
+#define get_slice                           cr_device_get_slice
+#define slice_init                          cr_slice_init
+#define get_slice_oui                       cr_slice_get_oui
+#define get_slice_model_number              cr_slice_get_model_number
+#define get_slice_revision_number           cr_slice_get_revision_number
+#define get_slice_userdata                  cr_slice_get_userdata
+#define set_slice_userdata                  cr_slice_set_userdata
+#define get_slice_type                      cr_slice_get_type
+#define get_slice_device_type               cr_slice_get_device_type
+#define get_slice_limits                    cr_slice_get_limits
+#define get_slice_vsensor                   cr_slice_get_vsensor
+#define get_slice_vsensor_ex                cr_slice_get_vsensor_ex
+#define get_slice_sram_status               cr_sram_get_status
+#define generate_slice_sram_error           cr_sram_generate_error
+#define slice_read                          cr_slice_read
+#define slice_write                         cr_slice_write
+#define slice_burst_read                    cr_slice_burst_read
+#define slice_burst_write                   cr_slice_burst_write
+#define slice_load_setup                    cr_slice_load_setup
+#define slice_save_setup                    cr_slice_save_setup
+#define slice_enable_clock_output           cr_clockout_enable
+#define slice_disable_all_clock_output      cr_clockout_disable_all
+#define slice_disable_clock_output          cr_clockout_disable
+#define slice_set_mdio_mode                 cr_slice_set_mdio_mode
+#define set_shell_readline_function         cr_shell_set_readline
+#define get_shell_command_name              cr_shell_get_command_name
+#define run_shell_command                   cr_shell_run_command
+#define spawn_shell                         cr_shell_spawn
+#define spawn_enhanced_shell                cr_shell_spawn_enhanced
+#define spawn_shell_server                  cr_shell_spawn_server
+#define set_shell_slices                    cr_shell_set_slices
+#define get_lane_option_list                cr_lane_get_option_list
+#define is_lane_option_supported            cr_lane_is_option_supported
+#define get_lane_option                     cr_lane_get_option
+#define set_lane_option                     cr_lane_set_option
+#define set_lane_config                     cr_lane_set_config
+#define get_lane_config                     cr_lane_get_config
+#define set_lane_loopback_mode              cr_lane_set_loopback_mode
+#define get_lane_mode                       cr_lane_get_mode
+#define set_lane_mode                       cr_lane_set_mode
+#define update_lane_mode                    cr_lane_update_mode
+#define disable_lane                        cr_lane_disable
+#define top_pll_cal                         cr_serdes_cal_top_pll
+#define top_pll_init                        cr_serdes_init_top_pll
+#define get_top_pll_cap                     cr_serdes_get_top_pll_cap
+#define get_lane_count                      cr_lane_get_count
+#define get_rx_ffe_range                    cr_serdes_get_rx_ffe_range
+#define get_rx_ffe_weighting_table_range    cr_serdes_get_rx_ffe_weighting_table_range
+#define get_tx_ffe_range                    cr_serdes_get_tx_ffe_range
+#define get_rx_dfe_range                    cr_serdes_get_rx_dfe_range
+#define get_rx_isi_range                    cr_serdes_get_rx_isi_range
+#define set_rx_polarity                     cr_serdes_set_rx_polarity
+#define set_tx_polarity                     cr_serdes_set_tx_polarity
+#define get_rx_polarity                     cr_serdes_get_rx_polarity
+#define get_tx_polarity                     cr_serdes_get_tx_polarity
+#define set_rx_input_mode                   cr_serdes_set_rx_coupling
+#define get_rx_input_mode                   cr_serdes_get_rx_coupling
+#define set_tx_gray_code                    cr_serdes_set_tx_gray_code
+#define set_rx_gray_code                    cr_serdes_set_rx_gray_code
+#define get_tx_gray_code                    cr_serdes_get_tx_gray_code
+#define get_rx_gray_code                    cr_serdes_get_rx_gray_code
+#define set_tx_precoder                     cr_serdes_set_tx_precoder
+#define set_rx_precoder                     cr_serdes_set_rx_precoder
+#define get_tx_precoder                     cr_serdes_get_tx_precoder
+#define get_rx_precoder                     cr_serdes_get_rx_precoder
+#define set_tx_msb                          cr_serdes_set_tx_msb
+#define set_rx_msb                          cr_serdes_set_rx_msb
+#define get_tx_msb                          cr_serdes_get_tx_msb
+#define get_rx_msb                          cr_serdes_get_rx_msb
+#define set_tx_cap                          cr_serdes_set_tx_cap
+#define set_rx_cap                          cr_serdes_set_rx_cap
+#define get_tx_cap                          cr_serdes_get_tx_cap
+#define get_rx_cap                          cr_serdes_get_rx_cap
+#define get_rx_ppm                          cr_serdes_get_rx_ppm
+#define get_rx_skef                         cr_serdes_get_rx_skef
+#define get_rx_dac                          cr_serdes_get_rx_dac
+#define get_rx_attenuator                   cr_serdes_get_rx_attenuator
+#define get_ffe_taps                        cr_serdes_get_ffe_taps
+#define get_ffe_taps_fine                   cr_serdes_get_ffe_taps_fine
+#define get_f1over3                         cr_serdes_get_f1over3
+#define get_agcgain_count                   cr_serdes_get_agcgain_count
+#define get_agcgain                         cr_serdes_get_agcgain
+#define get_ctle_count                      cr_serdes_get_ctle_count
+#define get_ctle                            cr_serdes_get_ctle
+#define get_delta_phase                     cr_serdes_get_delta_phase
+#define get_edge                            cr_serdes_get_edge
+#define get_dfe                             cr_serdes_get_dfe
+#define get_eye                             cr_serdes_get_raw_eye
+#define lane_ready_status                   cr_serdes_get_rx_ready
+#define signal_detect                       cr_serdes_get_rx_signal_detect
+#define set_rx_skef                         cr_serdes_set_rx_skef
+#define set_rx_dac                          cr_serdes_set_rx_dac
+#define set_rx_attenuator                   cr_serdes_set_rx_attenuator
+#define set_ffe_taps                        cr_serdes_set_ffe_taps
+#define set_ffe_taps_fine                   cr_serdes_set_ffe_taps_fine
+#define set_f1over3                         cr_serdes_set_f1over3
+#define set_agcgain                         cr_serdes_set_agcgain
+#define set_ctle                            cr_serdes_set_ctle
+#define set_delta_phase                     cr_serdes_set_delta_phase
+#define set_edge                            cr_serdes_set_edge
+#define get_tx_prbs                         cr_prbs_get_tx_generator
+#define get_rx_prbs                         cr_prbs_get_rx_checker
+#define set_tx_prbs                         cr_prbs_set_tx_generator
+#define set_rx_prbs                         cr_prbs_set_rx_checker
+#define set_rx_prbs_nrz                     cr_prbs_set_rx_nrz
+#define set_rx_prbs_pam4                    cr_prbs_set_rx_pam4
+#define set_tx_prbs_nrz                     cr_prbs_set_tx_nrz
+#define set_tx_prbs_pam4                    cr_prbs_set_tx_pam4
+#define get_rx_prbs_count                   cr_prbs_get_rx_count
+#define get_rx_prbs_ber                     cr_prbs_get_rx_ber
+#define get_rx_prbs_duration                cr_prbs_get_rx_duration
+#define reset_rx_prbs_count                 cr_prbs_reset_rx_count
+#define generate_tx_prbs_error              cr_prbs_generate_tx_error
+#define set_tx_test_pattern_enable          cr_testpatt_set_tx_enable
+#define get_tx_test_pattern_enable          cr_testpatt_get_tx_enable
+#define set_tx_test_pattern_memory          cr_testpatt_set_tx_memory
+#define get_tx_test_pattern_memory          cr_testpatt_get_tx_memory
+#define set_tx_test_pattern_mode            cr_testpatt_set_tx_mode
+#define get_tx_test_pattern_mode            cr_testpatt_get_tx_mode
+#define tx_disable                          cr_lane_tx_disable
+#define tx_no_disable                       cr_lane_tx_no_disable
+#define lane_tx_status                      cr_lane_tx_get_status
+#define rx_disable                          cr_lane_rx_disable
+#define rx_no_disable                       cr_lane_rx_no_disable
+#define lane_rx_reset                       cr_lane_rx_reset
+#define soft_reset                          cr_slice_soft_reset
+#define logic_reset                         cr_slice_logic_reset
+#define logic_reset_lane                    cr_lane_logic_reset
+#define mcu_reset                           cr_slice_mcu_reset
+#define mcu_reset_hold                      cr_slice_mcu_reset_hold
+#define reg_reset                           cr_slice_reg_reset
+#define reg_reset_lane                      cr_lane_reg_reset
+#define set_tx_taps_scale                   cr_serdes_set_tx_taps_scale
+#define get_tx_taps_scale                   cr_serdes_get_tx_taps_scale
+#define set_tx_taps                         cr_serdes_set_tx_taps
+#define set_tx_taps_extended                cr_serdes_set_tx_taps_extended
+#define get_tx_taps                         cr_serdes_get_tx_taps
+#define get_tx_taps_extended                cr_serdes_get_tx_taps_extended
+#define set_fec_analyzer                    cr_fecana_configure
+#define get_fec_analyzer                    cr_fecana_query
+#define get_fec_analyzer_read_counter       cr_fecana_get_raw_counter
+#define get_fec_analyzer_counter            cr_fecana_get_counter
+#define set_fec_analyzer_hist_group         cr_fecana_set_hist_group
+#define get_fec_analyzer_hist_counter       cr_fecana_get_hist_counter
+#define get_fec_analyzer_duration           cr_fecana_get_duration
+#define get_fec_analyzer_error_rate         cr_fecana_get_error_rate
+#define set_autoneg_pages                   cr_autoneg_set_pages
+#define get_autoneg_exchanged_pages         cr_autoneg_get_exchanged_pages
+#define get_rsfec_align_status              cr_rsfec_get_align_status
+#define get_rsfec_fifo                      cr_rsfec_get_fifo
+#define get_rsfec_lane_mapping              cr_rsfec_get_lane_mapping
+#define get_rsfec_histogram                 cr_rsfec_get_histogram
+#define get_rsfec_corrected_codeword        cr_rsfec_get_corrected_codeword
+#define get_rsfec_uncorrected_codeword      cr_rsfec_get_uncorrected_codeword
+#define get_rsfec_symbol_error              cr_rsfec_get_symobl_error
+#define get_rsfec_total_bits                cr_rsfec_get_total_bits
+#define get_rsfec_corrected_bits            cr_rsfec_get_corrected_bits
+#define set_rsfec_count_freeze              cr_rsfec_set_count_freeze
+#define get_rsfec_count_freeze              cr_rsfec_get_count_freeze
+#define reset_rsfec_count                   cr_rsfec_reset_count
+
+// enums that need Credo prefix
+#ifndef CR_CPPAPI
+#define FaultPropagation_t     CredoFaultPropagation_t
+#define ErrorCodes_t           CredoErrorCodes_t
+#define CredoLaneRxInputMode_t CredoLaneCoupling_t
+#define readline_func_t        CredoReadLine_t
+
+#define LOG_ERROR CR_LOG_ERROR
+#define LOG_WARN  CR_LOG_WARN
+#define LOG_INFO  CR_LOG_INFO
+#define LOG_DEBUG CR_LOG_DEBUG
+#define LOG_TRACE CR_LOG_TRACE
+
+#define SUCCESS              CR_SUCCESS
+#define FAIL                 CR_FAIL
+#define PHY_FW_DOWNLOAD_FAIL CR_PHY_FW_DOWNLOAD_FAIL
+#define FW_TIMEOUT           CR_FW_TIMEOUT
+#define NOT_READY            CR_NOT_READY
+#define OUT_OF_MEMORY        CR_OUT_OF_MEMORY
+#define HAL_LOAD_FAIL        CR_HAL_LOAD_FAIL
+#define HAL_NOT_FOUND        CR_HAL_NOT_FOUND
+#define INVALID_ARGS         CR_INVALID_ARGS
+#define MUTEX_TIMEOUT        CR_MUTEX_TIMEOUT
+#define UNSUPPORTED          CR_UNSUPPORTED
+#define NOTIMPLEMENTED       CR_NOTIMPLEMENTED
+
+#define SLICE_FULL_INIT        CR_INIT_FULL
+#define SLICE_INIT_NO_FIRMWARE CR_INIT_NO_FIRMWARE
+#define SLICE_WARM_INIT        CR_INIT_WARM
+#define SLICE_NO_INIT          CR_INIT_NONE
+
+#define FEC_ERROR_FRAME  CR_FEC_ERROR_FRAME
+#define FEC_ERROR_SYMBOL CR_FEC_ERROR_SYMBOL
+#define FEC_ERROR_BIT    CR_FEC_ERROR_BIT
+
+#define Retimer CR_PORT_RETIMER
+#define BitMux  CR_PORT_BITMUX
+#define Gearbox CR_PORT_GEARBOX
+
+#define SerDesMode   CR_PMODE_SERDES
+#define MacsecBypass CR_PMODE_PCS
+#define Macsec       CR_PMODE_MACSEC
+#define PCSMode      CR_PMODE_PCS
+#define MacsecMode   CR_PMODE_MACSEC
+
+#define DC CR_COUPLING_DC
+#define AC CR_COUPLING_AC
+
+#define LaneMode_OFF     CR_LMODE_OFF
+#define LaneMode_NRZ     CR_LMODE_NRZ
+#define LaneMode_PAM4    CR_LMODE_PAM4
+#define LaneMode_AN      CR_LMODE_AN
+#define LaneMode_DISABLE CR_LMODE_DISABLE
+
+#define NO_FEC   CR_FEC_NONE
+#define FireCode CR_FEC_FIRE_CODE
+#define RS_528   CR_FEC_RS_528
+#define RS_544   CR_FEC_RS_544
+
+#define SramNoError            CR_SRAM_NO_ERROR
+#define SramCorrectableError   CR_SRAM_CORR_ERROR
+#define SramUncorrectableError CR_SRAM_UNCORR_ERROR
+
+#define SystemSide CR_SIDE_SYSTEM
+#define LineSide   CR_SIDE_LINE
+
+#define MACsecEgress  CR_MACSEC_EGRESS
+#define MACsecIngress CR_MACSEC_INGRESS
+
+#define PRBS7        CR_PRBS7
+#define PRBS9        CR_PRBS9
+#define PRBS11       CR_PRBS11
+#define PRBS13       CR_PRBS13
+#define PRBS15       CR_PRBS15
+#define PRBS23       CR_PRBS23
+#define PRBS31       CR_PRBS31
+#define PRBS_UNKNOWN CR_PRBS_UNKNOWN
+
+#define Custom         CR_TESTPATT_CUSTOM
+#define JP03A          CR_TESTPATT_JP03A
+#define JP03B          CR_TESTPATT_JP03B
+#define LinearPattern  CR_TESTPATT_LINEAR
+#define UnknownPattern CR_TESTPATT_UNKNOWN
+
+#ifndef LUA_BUILD
+#define Unknown CR_TX_UNKNOWN
+#else
+#define TX_Unknown CR_TX_UNKNOWN
+#endif
+#define LowPower         CR_TX_LOWPOWER
+#define Traffic          CR_TX_TRAFFIC
+#define Squelch          CR_TX_SQUELCH
+#define PRBSPAM4         CR_TX_PRBS_PAM4
+#define PRBSNRZ          CR_TX_PRBS_NRZ
+#define ForceDisable     CR_TX_FORCE_DISABLE
+#define ForcePRBSPAM4    CR_TX_FORCE_PRBSS_PAM4
+#define ForcePRBSNRZ     CR_TX_FORCE_PRBS_NRZ
+#define ForceTraffic     CR_TX_FORCE_TRAFFIC
+#define ForceTestPattern CR_TX_FORCE_TEST_PATT
+
+#define LB_DISABLED CR_LB_DISABLED
+#define TX_TO_RX    CR_LB_TX_TO_RX
+#define RX_TO_TX    CR_LB_RX_TO_TX
+
+#define FAULT_PROPAGATION_NONE        CR_FAULTPROP_NONE
+#define FAULT_PROPAGATION_LINE_TO_SYS CR_FAULTPROP_LINE_TO_SYS
+#define FAULT_PROPAGATION_SYS_TO_LINE CR_FAULTPROP_SYS_TO_LINE
+#define FAULT_PROPAGATION_BOTH        CR_FAULTPROP_BOTH
+
+#define PRBS_NOT_LOCKED   CR_PRBS_LOCK_NO
+#define PRBS_LOCKED       CR_PRBS_LOCK_YES
+#define PRBS_LOCK_INVALID CR_PRBS_LOCK_INVALID
+
+// macros
+
+#define EYE_MONITOR_DESTRUCTIVE CR_EYE_MONITOR_DESTRUCTIVE
+#define EYE_MONITOR_BATHTUB     CR_EYE_MONITOR_BATHTUB
+
+#define PORT_AUTO_ASSIGN_ID CR_PORT_AUTO_ASSIGN_ID
+#define PORT_UNCONFIGURED   CR_PORT_UNCONFIGURED
+
+#define PORT_LINE_SIDE_OPTICAL CR_PFLAG_LINE_SIDE_OPTICAL
+#define PORT_LINE_SIDE_ANLT    CR_PFLAG_LINE_SIDE_ANLT
+#define PORT_SYS_SIDE_LT       CR_PFLAG_SYS_SIDE_LT
+#define PORT_SYS_SIDE_OPTICAL  CR_PFLAG_SYS_SIDE_OPTICAL
+#define PORT_LINE_SIDE_AN      CR_PFLAG_LINE_SIDE_AN
+#define PORT_LINE_SIDE_LT      CR_PFLAG_LINE_SIDE_LT
+#define PORT_AUTONEG_OVERRIDE  CR_PFLAG_AUTONEG_OVERRIDE
+#define PORT_AUTONEG_DISABLE   CR_PFLAG_AUTONEG_DISABLE
+#define PORT_ENABLE_DOUBLE_CRC CR_PFLAG_ENABLE_DOUBLE_CRC
+
+#endif
+#endif
+#endif

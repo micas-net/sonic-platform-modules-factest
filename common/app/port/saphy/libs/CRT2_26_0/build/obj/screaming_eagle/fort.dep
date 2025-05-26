@@ -1,0 +1,3 @@
+/brcm-sai/sdk/fw_extphy/libs/CRT2_26/build/obj/screaming_eagle/fort.o: \
+ /brcm-sai/sdk/fw_extphy/libs/CRT2_26/credo/libs/fort.c \
+ /brcm-sai/sdk/fw_extphy/libs/CRT2_26/credo/include/libs/fort.h

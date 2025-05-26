@@ -1,0 +1,106 @@
+/*
+ *Copyright 2018 CENTEC
+ *
+ */
+
+/dts-v1/;
+
+/ {
+	description = "arm64 kernel, initramfs and FDT blob";
+	#address-cells = <1>;
+
+	images {
+		kernel_ctc {
+			description = "ARM64 Kernel";
+			data = /incbin/("./vmlinuz-5.10.0-23-2-arm64");
+			type = "kernel";
+			arch = "arm64";
+			os = "linux";
+			compression = "none";
+			load = <0x80080000>;
+			entry = <0x80080000>;
+			hash {
+				algo = "crc32";
+			};
+		};
+		initramfs {
+			description = "initramfs";
+			data = /incbin/("./initrd.img-5.10.0-23-2-arm64");
+			type = "ramdisk";
+			arch = "arm64";
+			os = "linux";
+			compression = "gzip";
+			load = <0x85000000>;
+			entry = <0x85000000>;
+			hash {
+				algo = "crc32";
+			};
+		};
+
+		fdt1 {
+			description = "dtb for b6501-48vs8cq v1.00";
+			data = /incbin/("./b6501-48vs8cq_v1.00.dtb");
+			type = "flat_dt";
+			arch = "arm64";
+			os = "linux";
+			fdtname = "b6501-48vs8cq_v1.00";
+			compression = "none";
+			load = <0x88000000>;
+			hash {
+				algo = "crc32";
+			};
+		};
+
+		fdt2 {
+			description = "dtb for b6501-32cq v1.00";
+			data = /incbin/("./b6501-32cq_v1.00.dtb");
+			type = "flat_dt";
+			arch = "arm64";
+			os = "linux";
+			fdtname = "b6501-32cq_v1.00";
+			compression = "none";
+			load = <0x88000000>;
+			hash {
+				algo = "crc32";
+			};
+		};
+
+		fdt3 {
+			description = "dtb for b6231-48xs8cq-v2";
+			data = /incbin/("./b6231-48xs8cq-v2.dtb");
+			type = "flat_dt";
+			arch = "arm64";
+			os = "linux";
+			fdtname = "b6231-48xs8cq-v2";
+			compression = "none";
+			load = <0x88000000>;
+			hash {
+				algo = "crc32";
+			};
+		};
+
+		fdt4 {
+			description = "dtb for b6501-48vs8cq-v2";
+			data = /incbin/("./b6501-48vs8cq-v2.dtb");
+			type = "flat_dt";
+			arch = "arm64";
+			os = "linux";
+			fdtname = "b6501-48vs8cq-v2";
+			compression = "none";
+			load = <0x88000000>;
+			hash {
+				algo = "crc32";
+			};
+		};
+	};
+	configurations {
+        default = "conf1";
+		conf1 {
+			description = "Boot Linux kernel with FDT blob";
+			kernel = "kernel_ctc";
+			ramdisk = "initramfs";
+			fdt = "fdt1";
+			fdt_list = "fdt1 fdt2 fdt3 fdt4";
+		};
+	};
+};

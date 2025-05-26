@@ -1,0 +1,3 @@
+/brcm-sai/sdk/fw_extphy/libs/CRT2_26/build/obj//jwrite.o: \
+ /brcm-sai/sdk/fw_extphy/libs/CRT2_26/credo/libs/jwrite.c \
+ /brcm-sai/sdk/fw_extphy/libs/CRT2_26/credo/include/libs/jwrite.h

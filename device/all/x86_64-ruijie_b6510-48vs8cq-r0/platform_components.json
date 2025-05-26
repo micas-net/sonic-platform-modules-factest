@@ -1,0 +1,45 @@
+{
+    "chassis": {
+        "B6510-48VS8CQ": {
+            "component": {
+                "CPU_CPLD": {
+                    "firmware": "/usr/share/sonic/device/x86_64-ruijie_b6510-48vs8cq-r0/latest_firmware/cpu_cpld_upgrade_header.bin",
+                    "version": "45190831"
+                },
+                "CONNECT_CPLD_SMBUS": {
+                    "firmware": "/usr/share/sonic/device/x86_64-ruijie_b6510-48vs8cq-r0/latest_firmware/other_cpld_upgrade_header.vme",
+                    "version": "01230727"
+                },
+                "CONNECT_CPLD_9641": {
+                    "firmware": "/usr/share/sonic/device/x86_64-ruijie_b6510-48vs8cq-r0/latest_firmware/other_cpld_upgrade_header.vme",
+                    "version": "01230727"
+                },
+                "MAC_CPLDA_9641": {
+                    "firmware" : "/usr/share/sonic/device/x86_64-ruijie_b6510-48vs8cq-r0/latest_firmware/other_cpld_upgrade_header.vme",
+                    "version" : "01230727"
+                },
+                "MAC_CPLDA_GPIO": {
+                    "firmware" : "/usr/share/sonic/device/x86_64-ruijie_b6510-48vs8cq-r0/latest_firmware/other_cpld_upgrade_header.vme",
+                    "version" : "01230727"
+                },
+                "MAC_CPLDB_9641": {
+                    "firmware" : "/usr/share/sonic/device/x86_64-ruijie_b6510-48vs8cq-r0/latest_firmware/other_cpld_upgrade_header.vme",
+                    "version" : "20221104"
+                },
+                "MAC_CPLDB_GPIO": {
+                    "firmware" : "/usr/share/sonic/device/x86_64-ruijie_b6510-48vs8cq-r0/latest_firmware/other_cpld_upgrade_header.vme",
+                    "version" : "20221104"
+                },
+                "BIOS": {
+                    "firmware" : "",
+                    "version" : "5.11(3BARB0027)"
+                },
+                "BMC": {
+                    "firmware" : "",
+                    "version" : "2.23"
+                }
+            }
+        }
+    }
+}
+

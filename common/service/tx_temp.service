@@ -1,0 +1,9 @@
+[Unit]
+Description=transceiver temperature Service
+After=platform-modules.service subnetwork.service
+
+[Service]
+ExecStart=/usr/bin/python3 /usr/local/bin/tx_temp.py
+
+[Install]
+WantedBy=multi-user.target
