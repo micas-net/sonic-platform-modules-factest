@@ -189,7 +189,7 @@ class SfpUtil(SfpUtilBase):
         # Check for invalid port_num
         if port_num < self.port_start or port_num > self.port_end:
             return False
-        cmd = "cat /sys/wb_plat/sff/sff{}/present".format(str(port_num + 1))
+        cmd = "cat /sys/s3ip/transceiver/eth{}/present".format(str(port_num + 1))
         ret, output = subprocess.getstatusoutput(cmd)
         if ret != 0:
             return False
